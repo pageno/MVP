@@ -2,19 +2,45 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MetaToRI 로그인</title>
+  <title>MetaToRI Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>MetaToRI Login</h1>
-    <input type="email" id="email" placeholder="이메일 입력">
-    <input type="password" id="password" placeholder="비밀번호 입력">
-    <button id="signup">회원가입</button>
-    <button id="login">로그인</button>
-  </div>
+  <h2>로그인 / 회원가입</h2>
 
-  <script type="module" src="./auth.js"></script>
+  <input id="email" type="email" placeholder="이메일"><br>
+  <input id="password" type="password" placeholder="비밀번호(6자 이상)"><br>
+  <button id="signup">회원가입</button>
+  <button id="login">로그인</button>
+  <p id="message" style="color:red;"></p>
+
+  <script type="module">
+    import { auth } from './firebase.js';
+    import { createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+      from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const msg = document.getElementById("message");
+
+    document.getElementById("signup").addEventListener("click", async () => {
+      try {
+        await createUserWithEmailAndPassword(auth, email.value, password.value);
+        msg.style.color = "green";
+        msg.textContent = "회원가입 성공! 로그인해주세요.";
+      } catch (error) {
+        msg.textContent = error.message;
+      }
+    });
+
+    document.getElementById("login").addEventListener("click", async () => {
+      try {
+        await signInWithEmailAndPassword(auth, email.value, password.value);
+        window.location.href = "gallery.html"; // 로그인 성공 시 갤러리로 이동
+      } catch (error) {
+        msg.textContent = "로그인 실패: " + error.message;
+      }
+    });
+  </script>
 </body>
 </html>
