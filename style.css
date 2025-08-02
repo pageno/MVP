@@ -1,0 +1,20 @@
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f0f0f0;
+}
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+#message { color: red; margin-top: 10px; }
